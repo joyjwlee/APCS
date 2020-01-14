@@ -36,6 +36,6 @@ public class StringDriver {
         System.out.println("\n===============================");
         System.out.println("Enter a sentence to piggify");
         input = in.nextLine();
-        System.out.println("The piggified sentence is " + StringUtil.piggifySentence(input));
+        System.out.println("The piggified sentence is " + StringUtil.splitSentence(input));
     }
 }

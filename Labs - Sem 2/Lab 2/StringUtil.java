@@ -45,13 +45,22 @@ public class StringUtil {
     //Pre: gets original string (word)
     //Post: returns the string (word) in pig latin
     public static String piggify (String str) {
-        if ( findFirstVowel(str) == -1 ) return str + "ay"; 
-        if ( findFirstVowel(str) == 0 ) return str + "yay";
-        return str.substring( findFirstVowel(str) ) + str.substring( 0, findFirstVowel(str) ) + "ay";
+        //If first letter is not capital
+        if (97 <= str.charAt(0) && str.charAt(0) <= 122) {
+            if ( findFirstVowel(str) == -1 ) return str + "ay"; 
+            if ( findFirstVowel(str) == 0 ) return str + "yay";
+            return str.substring( findFirstVowel(str) ) + str.substring( 0, findFirstVowel(str) ) + "ay";
+        }
+        else {
+            String ans = clean(str);
+            ans = piggify(ans);
+            return (char)(ans.charAt(0)-32) + ans.substring(1);
+        }
     }
 
     //Pre: gets original string (sentence)
     //Post: returns the string (sentence) in pig latin
+    //*THIS IS FIRST DRAFT, NOT USED IN DRIVER*
     public static String piggifySentence (String str) {
         String pigSent = "";
         int lft = 0, rgt = 0;
@@ -69,5 +78,37 @@ public class StringUtil {
             }
         }
         return pigSent;
+    }
+    
+    //Pre: gets original string (sentence)
+    //Post: returns the string (sentence) in pig latin
+    //*THIS IS FINAL DRAFT, USED IN DRIVER AND TAKES CARE OF PUNCUTATION AND CAPITALIZATION*
+    public static String splitSentence (String str) {
+        String ans = "", word = "", between = "";
+        int ind;
+        for (int i = 0; i < str.length(); i++) {
+            if ((65 <= str.charAt(i) && str.charAt(i) <= 90) || (97 <= str.charAt(i) && str.charAt(i) <= 122) ){
+                ind = i;
+                word = "";
+                while (ind < str.length() && ((65 <= str.charAt(ind) && str.charAt(ind) <= 90) || (97 <= str.charAt(ind) && str.charAt(ind) <= 122)) ) {
+                    word += str.charAt(ind);
+                    ind++;
+                }
+                i = ind - 1;
+                ans += piggify(word);
+            }
+            else {
+                between = "";
+                ind = i;
+                word = "";
+                while (ind < str.length() && !((65 <= str.charAt(ind) && str.charAt(ind) <= 90) || (97 <= str.charAt(ind) && str.charAt(ind) <= 122)) ) {
+                    between += str.charAt(ind);
+                    ind++;
+                }
+                i = ind - 1;
+                ans += between;
+            }
+        }
+        return ans;
     }
 }
