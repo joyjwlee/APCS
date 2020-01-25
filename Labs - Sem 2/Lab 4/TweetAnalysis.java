@@ -11,18 +11,23 @@ public class TweetAnalysis {
         String word = input.next();
         SOP("Index is: ");
         SOP(binarySearch(word));
+        printTweets();
     }
 
-    //Shorthand for System.out.println :)
-    void SOP (Object line) {
+    //Shorthand for System.out.print(ln) :)
+    static void SOP (Object line) {
         System.out.println(line);
+    }
+
+    static void sop (Object line) {
+        System.out.print(line);
     }
 
     //Accesses dictionary text file and puts all words into an arraylist
     public static void initList () {
         try {
             Scanner input = new Scanner( new File( "dictionary.txt" ) );
-            while (input.hasNext() ) {
+            while (input.hasNext()) {
                 dictionaryWords.add( input.nextLine() );
             }
         } catch ( FileNotFoundException ex) {}
@@ -47,7 +52,7 @@ public class TweetAnalysis {
         //Return -1 if it doesn't exist
         return -1;
     }
-    
+
     public void processLine (String str) {
         int ind;
         //Iterate through the line
@@ -69,6 +74,37 @@ public class TweetAnalysis {
                 }
                 i = ind - 1;
             }
+        }
+    }
+
+    //Accesses Json file and outputs only the tweets to the text file
+    public static void printTweets () {
+        String everything = "";
+        try {
+            Scanner input = new Scanner( new File( "TweetJson.txt" ) ); //"TweetJsonSmall.txt"
+            while (input.hasNext()) {
+                everything = input.nextLine();
+            }
+        } catch ( FileNotFoundException ex) {}
+
+        //Use formatting from Json file to isolate tweet
+        // Opening: {"text":"
+        String opening = "{\"text\":\"";
+        int openingLen = opening.length();
+        // Closing: "}
+        String closing = "\"}";
+        int closingLen = closing.length();
+        
+        //Use indexOf to extract tweets
+        int start = everything.indexOf(opening);
+        int end = everything.indexOf(closing);
+        int x = 1;
+        while ( start != -1 ) {
+            start = everything.indexOf(opening);
+            everything = everything.substring(start + openingLen);
+            end = everything.indexOf(closing);
+            SOP ( x + " " + everything.substring(0,end) );
+            x++;
         }
     }
 }
