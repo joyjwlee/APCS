@@ -2,16 +2,27 @@ import java.util.*;
 import java.io.*;
 
 public class TweetAnalysis {
-    Scanner input = new Scanner(System.in);
     static List<String> dictionaryWords = new ArrayList<String>();
+    static List<String> tweets = new ArrayList<String>();
 
     public void go () {
-        initList();
+        //Preliminary processes
+        Scanner input = new Scanner(System.in);
+        SOP("Doing preliminary processes");
+        initDic();
+        //initTweets();
+        //this.setTextFile();
+        SOP("All initialization is done");
+
+        //Testing
         SOP("Enter string to find: ");
         String word = input.next();
         SOP("Index is: ");
         SOP(binarySearch(word));
-        printTweets();
+        SOP("first 10 tweets");
+        for (int i = 0; i < 10; i++) {
+            SOP ("i: " + i + " || " + tweets.get(i));
+        }
     }
 
     //Shorthand for System.out.print(ln) :)
@@ -24,7 +35,7 @@ public class TweetAnalysis {
     }
 
     //Accesses dictionary text file and puts all words into an arraylist
-    public static void initList () {
+    public static void initDic () {
         try {
             Scanner input = new Scanner( new File( "dictionary.txt" ) );
             while (input.hasNext()) {
@@ -53,32 +64,9 @@ public class TweetAnalysis {
         return -1;
     }
 
-    public void processLine (String str) {
-        int ind;
-        //Iterate through the line
-        for (int i = 0; i < str.length(); i++) {
-            //If at a character, extract the word
-            if ( (65 <= str.charAt(i) && str.charAt(i) <= 90) || (97 <= str.charAt(i) && str.charAt(i) <= 122) ){
-                ind = i;
-                while (ind < str.length() && ((65 <= str.charAt(ind) && str.charAt(ind) <= 90) || (97 <= str.charAt(ind) && str.charAt(ind) <= 122)) ) {
-                    ind++;
-                }
-                str.substring(i, ind);
-                i = ind - 1;
-            }
-            //Otherwise, get to the next word
-            else {
-                ind = i;
-                while (ind < str.length() && !((65 <= str.charAt(ind) && str.charAt(ind) <= 90) || (97 <= str.charAt(ind) && str.charAt(ind) <= 122)) ) {
-                    ind++;
-                }
-                i = ind - 1;
-            }
-        }
-    }
-
     //Accesses Json file and outputs only the tweets to the text file
-    public static void printTweets () {
+    public static void initTweets () {
+        //AS OF 1:30 PM PST 1/28/2020
         String everything = "";
         try {
             Scanner input = new Scanner( new File( "TweetJson.txt" ) ); //"TweetJsonSmall.txt"
@@ -94,17 +82,35 @@ public class TweetAnalysis {
         // Closing: "}
         String closing = "\"}";
         int closingLen = closing.length();
-        
+
         //Use indexOf to extract tweets
         int start = everything.indexOf(opening);
         int end = everything.indexOf(closing);
-        int x = 1;
         while ( start != -1 ) {
             start = everything.indexOf(opening);
             everything = everything.substring(start + openingLen);
             end = everything.indexOf(closing);
-            SOP ( x + " " + everything.substring(0,end) );
-            x++;
+            tweets.add( everything.substring(0,end) );
         }
+        //Loop iterates one more time than it should, so remove last element
+        tweets.remove( tweets.size()-1 );
+    }
+
+    //Writes to a text file named tweetsFiltered
+    public void setTextFile () {
+        String allTweets = "";
+        for (String tweet : tweets) {
+            allTweets += tweet;
+            allTweets += "\n";
+        }
+        BufferedWriter writer = null;
+        try {
+            File logFile = new File ("tweetsFiltered.txt");
+            writer = new BufferedWriter( new FileWriter(logFile) );
+            writer.write( allTweets );
+        } catch (Exception e) {}
+        try {
+            writer.close();
+        } catch (Exception e) {}
     }
 }
