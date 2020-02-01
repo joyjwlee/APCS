@@ -36,6 +36,14 @@ public class Sound extends JFrame {
                 clip.start();
                 clip.loop(0);
             }
+            
+            if( n == "Loading" ) {
+                url = this.getClass().getClassLoader().getResource("Loading.wav");
+                AudioInputStream audioIn = AudioSystem.getAudioInputStream(url);
+                clip.open(audioIn);
+                clip.start();
+                clip.loop(2);
+            }
         } catch (UnsupportedAudioFileException e) {
             e.printStackTrace();
         } catch (IOException e) {
