@@ -11,6 +11,7 @@ public class ClickDriver {
         frame.add(game); // add game to the frame so it will be on the screen
         frame.pack();
         frame.setVisible(true);
+        frame.setResizable(false);
         game.playGame();// call the playGame() method to intitiate the game
     }
 }

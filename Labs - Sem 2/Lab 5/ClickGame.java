@@ -8,6 +8,8 @@ public class ClickGame extends JPanel implements MouseListener {
     public static final int HEIGHT = 800;
     private JLabel label;
     private int timer = 0;
+    ArrayList<Sphere> spheres = new ArrayList<Sphere>();
+    Sphere a = new Sphere();
 
     // constructor - sets the initial conditions for this Game object
     public ClickGame() {
@@ -26,7 +28,6 @@ public class ClickGame extends JPanel implements MouseListener {
         label.setForeground(Color.BLACK);
 
         this.addMouseListener(this);
-
         this.setFocusable(true);// I'll tell you later - Don't change
     }
 
@@ -40,6 +41,10 @@ public class ClickGame extends JPanel implements MouseListener {
                 label.setText("Time: " + timer / 1000);
             } catch (InterruptedException ex) {
             }
+            /*
+             * for (Sphere curr:spheres) { curr.move(); }
+             */
+            a.move();
             this.repaint();// redraw the screen with the updated locations; calls paintComponent below
         }
     }
@@ -48,6 +53,7 @@ public class ClickGame extends JPanel implements MouseListener {
     // Postcondition: the screen has been updated
     public void paintComponent(Graphics page) {
         super.paintComponent(page);
+        a.draw(page);
     }
 
     // this method is called whenever the mouse button is pressed
