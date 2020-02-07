@@ -8,8 +8,9 @@ public class ClickGame extends JPanel implements MouseListener {
     public static final int HEIGHT = 800;
     private JLabel label;
     private int timer = 0;
+    int mouseX = 0, mouseY = 0;
+    int moveX = 0, moveY = 0;
     ArrayList<Sphere> spheres = new ArrayList<Sphere>();
-    Sphere a = new Sphere();
 
     // constructor - sets the initial conditions for this Game object
     public ClickGame() {
@@ -23,12 +24,15 @@ public class ClickGame extends JPanel implements MouseListener {
         this.add(label);
         label.setVisible(true);
         label.setFont(new Font("Arial", Font.BOLD, 30));
+        // label.setBounds(400, 30, 200, 30);
         label.setBounds(400, 30, 200, 30);
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(Color.BLACK);
 
         this.addMouseListener(this);
         this.setFocusable(true);// I'll tell you later - Don't change
+
+        spheres.add(new Sphere());// Just add one for now
     }
 
     // This is the method that runs the game
@@ -38,13 +42,17 @@ public class ClickGame extends JPanel implements MouseListener {
             try {
                 Thread.sleep(10);// pause for 10 milliseconds
                 timer += 10;
-                label.setText("Time: " + timer / 1000);
+                // label.setText("Time: " + timer / 1000);
+                label.setText(mouseX + "," + mouseY);
+                // label.setText(moveX + "," + moveY);
+                if (timer % 2000 == 0) {
+                    spheres.add(new Sphere());
+                }
             } catch (InterruptedException ex) {
             }
-            /*
-             * for (Sphere curr:spheres) { curr.move(); }
-             */
-            a.move();
+            for (Sphere curr : spheres) {
+                curr.move();
+            }
             this.repaint();// redraw the screen with the updated locations; calls paintComponent below
         }
     }
@@ -53,13 +61,21 @@ public class ClickGame extends JPanel implements MouseListener {
     // Postcondition: the screen has been updated
     public void paintComponent(Graphics page) {
         super.paintComponent(page);
-        a.draw(page);
+        for (Sphere curr : spheres) {
+            curr.draw(page);
+        }
+    }
+
+    // constantly update whenver mouse is moved
+    public void mouseMoved(MouseEvent e) {
+        moveX = e.getX();
+        moveY = e.getY();
     }
 
     // this method is called whenever the mouse button is pressed
     public void mousePressed(MouseEvent event) {
-        int mouseX = event.getX(); // returns the x coordinate of the cursor when the mouse is clicked
-        int mouseY = event.getY(); // returns the y coordinate of the cursor when the mouse is clicked
+        mouseX = event.getX(); // returns the x coordinate of the cursor when the mouse is clicked
+        mouseY = event.getY(); // returns the y coordinate of the cursor when the mouse is clicked
     }
 
     // required for compiling; do not use

@@ -10,11 +10,9 @@ public class Sphere {
     private Color color;
 
     public Sphere() {
-        x = (int) (Math.random() * WIDTH);
-        y = (int) (Math.random() * HEIGHT);
         size = 50;
-        x += size / 2;
-        y += size / 2;
+        x = (int) (Math.random() * WIDTH) - size;
+        y = (int) (Math.random() * HEIGHT) - size;
         xShift = 2;
         yShift = 2;
         if (Math.random() > 0.5)
@@ -25,10 +23,14 @@ public class Sphere {
     }
 
     public void move() {
-        if (x < 0 || x + size > WIDTH)
-            xShift *= -1;
-        if (y < 0 || y + size > HEIGHT)
-            yShift *= -1;
+        if (x < 0)
+            xShift = Math.abs(xShift);
+        if (x + size + xShift > WIDTH)
+            xShift = Math.abs(xShift) * -1;
+        if (y < 0)
+            yShift = Math.abs(yShift);
+        if (y + size + yShift > HEIGHT)
+            yShift = Math.abs(yShift) * -1;
         x += xShift;
         y += yShift;
     }
