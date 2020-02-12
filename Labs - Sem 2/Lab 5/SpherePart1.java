@@ -1,6 +1,6 @@
 import java.awt.*;
 
-public class Sphere {
+public class SpherePart1 {
     // Private instance variables
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
@@ -9,7 +9,7 @@ public class Sphere {
     private int size;
     private Color color;
 
-    public Sphere() {
+    public SpherePart1() {
         size = 50;
         x = (int) (Math.random() * WIDTH) - size;
         y = (int) (Math.random() * HEIGHT) - size;
@@ -35,9 +35,9 @@ public class Sphere {
         y += yShift;
     }
 
-    public void draw(Graphics page) {
-        page.setColor(color);
-        page.fillOval(x, y, size, size);
+    public void draw(Graphics g) {
+        g.setColor(color);
+        g.fillOval(x, y, size, size);
     }
 
     // Getter methods
