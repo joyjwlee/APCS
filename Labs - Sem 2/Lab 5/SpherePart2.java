@@ -4,7 +4,9 @@ public class SpherePart2 {
     // Private instance variables
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
-    public static Color[] colors = new Color[6];
+    // public static Color[] colors = {Color.RED, Color.GREEN, Color.BLUE,
+    // Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.WHITE, Color.BLACK,
+    // Color.GRAY, Color.LIGHT_GRAY, Color.DARK_GRAY, Color.PINK, Color.ORANGE};
     private int x, y;
     private int xShift, yShift;
     private int size;
@@ -20,7 +22,7 @@ public class SpherePart2 {
             xShift *= -1;
         if (Math.random() > 0.5)
             yShift *= -1;
-        color = Color.RED;
+        color = colors[(int) (Math.random() * colors.length)];
     }
 
     public void move() {
@@ -52,5 +54,9 @@ public class SpherePart2 {
 
     public int getSize() {
         return size;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
