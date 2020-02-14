@@ -10,7 +10,9 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
     private int timer = 0;
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
-    ArrayList<SpherePart2> spheres = new ArrayList<SpherePart2>();
+    ArrayList<Shape> shapes = new ArrayList<Shape>();
+    private int circCount = 0;
+    private int cubeCount = 0;
 
     // constructor - sets the initial conditions for this Game object
     public ClickGamePart2() {
@@ -32,8 +34,6 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.setFocusable(true);// I'll tell you later - Don't change
-
-        spheres.add(new SpherePart2());// Just add one for now
     }
 
     // This is the method that runs the game
@@ -41,39 +41,61 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
         boolean over = false;
         while (!over) {
             try {
+                if (timer % 2000 == 0) {
+                    if (shapes.size() <= 50) {
+                        if (Math.random() > 0.5) {
+                            shapes.add(new SpherePart2());
+                            circCount++;
+                        } else {
+                            shapes.add(new Cube());
+                            cubeCount++;
+                        }
+                    }
+                }
                 Thread.sleep(10);// pause for 10 milliseconds
                 timer += 10;
                 // label.setText("Time: " + timer / 1000);
                 // label.setText(mouseX + "," + mouseY);
                 label.setText(moveX + "," + moveY);
-                if (timer % 2000 == 0) {
-                    spheres.add(new SpherePart2());
-                }
             } catch (InterruptedException ex) {
             }
-            for (int i = 0; i < spheres.size(); i++) {
-                SpherePart2 curr = spheres.get(i);
-                int centX = curr.getX() + curr.getSize() / 2;
-                int centY = curr.getY() + curr.getSize() / 2;
-                int dX = Math.abs(moveX - centX);
-                int dY = Math.abs(moveY - centY);
-                // If a sphere intersects the cursor, remove it
-                // Otherwise move it
-                if (dX * dX + dY * dY <= curr.getSize() * curr.getSize() / 4) {
-                    spheres.remove(i);
-                } else {
+            for (int i = 0; i < shapes.size(); i++) {
+                Shape curr = shapes.get(i);
+                if (curr instanceof SpherePart2) {
+                    int centX = curr.getX() + curr.getSize() / 2;
+                    int centY = curr.getY() + curr.getSize() / 2;
+                    int dX = Math.abs(moveX - centX);
+                    int dY = Math.abs(moveY - centY);
+
+                    if (dX * dX + dY * dY <= curr.getSize() * curr.getSize() / 4) { // If intersect, remove others with
+                                                                                    // same color
+                        Color toRemove = shapes.get(i).getColor();
+                        shapes.remove(i);
+                        for (int j = 0; j < shapes.size(); j++) {
+                            if (shapes.get(j) instanceof SpherePart2 && shapes.get(j).getColor() == toRemove) {
+                                shapes.remove(j);
+                            }
+                        }
+                    } else { // Otherwise move it
+                        curr.move();
+                    }
+                } else { // Otherwise move it
                     curr.move();
                 }
             }
             this.repaint();// redraw the screen with the updated locations; calls paintComponent below
+            if (cubeCount == 50) {
+                over = true;
+            }
         }
+        label.setText("Elim: " + circCount);
     }
 
     // Precondition: executed when repaint or paintImmediately is called
     // Postcondition: the screen has been updated
     public void paintComponent(Graphics page) {
         super.paintComponent(page);
-        for (SpherePart2 curr : spheres) {
+        for (Shape curr : shapes) {
             curr.draw(page);
         }
     }
