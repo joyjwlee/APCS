@@ -5,8 +5,8 @@ public abstract class Shape {
     // Private instance variables
     public static final int WIDTH = 1000;
     public static final int HEIGHT = 800;
-    public static Color[] colors = { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN,
-            /* Color.BLUE, */ Color.MAGENTA, Color.WHITE };
+    public static Color[] colors = { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE,
+            Color.MAGENTA/* , Color.WHITE */ };
     private int x, y;
     private int xShift, yShift;
     private int size;
@@ -61,5 +61,22 @@ public abstract class Shape {
 
     public Color getRandomColor() {
         return colors[(int) (Math.random() * colors.length)];
+    }
+
+    // Setter methods
+    public void setX(int n) {
+        x = n;
+    }
+
+    public void setY(int n) {
+        y = n;
+    }
+
+    public void setSize(int n) {
+        size = n;
+    }
+
+    public void setColor(Color c) {
+        color = c;
     }
 }
