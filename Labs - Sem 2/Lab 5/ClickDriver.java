@@ -7,8 +7,9 @@ public class ClickDriver {
         JFrame frame = new JFrame("THE BOUNCING");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make the red close button work
         frame.setLocation(0, 0); // place the frame in the upper left corner
-        //ClickGame game = new ClickGame(); // create a Game object
-        ClickGamePart2 game = new ClickGamePart2(); // create a Game object
+        // ClickGame game = new ClickGame(); // create a Game object
+        // ClickGamePart2 game = new ClickGamePart2();
+        ClickGamePart3 game = new ClickGamePart3();
         frame.add(game); // add game to the frame so it will be on the screen
         frame.pack();
         frame.setVisible(true);

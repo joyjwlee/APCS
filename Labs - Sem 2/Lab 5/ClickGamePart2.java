@@ -11,8 +11,8 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
     ArrayList<Shape> shapes = new ArrayList<Shape>();
+    private int shapeCount = 0;
     private int circCount = 0;
-    private int cubeCount = 0;
 
     // constructor - sets the initial conditions for this Game object
     public ClickGamePart2() {
@@ -22,7 +22,7 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));// Don't change
 
         // create and format a JLabel to display a timer
-        label = new JLabel("Time: " + 0);
+        label = new JLabel("");
         this.add(label);
         label.setVisible(true);
         label.setFont(new Font("Arial", Font.BOLD, 30));
@@ -45,11 +45,10 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
                     if (shapes.size() <= 50) {
                         if (Math.random() > 0.5) {
                             shapes.add(new SpherePart2());
-                            circCount++;
                         } else {
                             shapes.add(new Cube());
-                            cubeCount++;
                         }
+                        shapeCount++;
                     }
                 }
                 Thread.sleep(10);// pause for 10 milliseconds
@@ -67,24 +66,27 @@ public class ClickGamePart2 extends JPanel implements MouseListener, MouseMotion
                     int dX = Math.abs(moveX - centX);
                     int dY = Math.abs(moveY - centY);
 
-                    if (dX * dX + dY * dY <= curr.getSize() * curr.getSize() / 4) { // If intersect, remove others with
-                                                                                    // same color
+                    if (dX * dX + dY * dY <= curr.getSize() * curr.getSize() / 4) { // If intersect, remove same colors
                         Color toRemove = shapes.get(i).getColor();
                         shapes.remove(i);
+                        shapeCount--;
+                        circCount++;
                         for (int j = 0; j < shapes.size(); j++) {
                             if (shapes.get(j) instanceof SpherePart2 && shapes.get(j).getColor() == toRemove) {
                                 shapes.remove(j);
+                                shapeCount--;
+                                circCount++;
                             }
                         }
                     } else { // Otherwise move it
                         curr.move();
                     }
-                } else { // Otherwise move it
+                } else { // Move non-sphere
                     curr.move();
                 }
             }
             this.repaint();// redraw the screen with the updated locations; calls paintComponent below
-            if (cubeCount == 50) {
+            if (shapeCount == 50) {
                 over = true;
             }
         }
