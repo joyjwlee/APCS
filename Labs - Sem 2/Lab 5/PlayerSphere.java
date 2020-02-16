@@ -5,6 +5,7 @@ public class PlayerSphere extends Shape {
     public PlayerSphere() {
         super();
         super.setSize(20);
+        super.setColor(Color.BLUE);
     }
 
     public void draw(Graphics g) {

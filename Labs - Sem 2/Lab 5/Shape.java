@@ -16,8 +16,8 @@ public abstract class Shape {
         size = (int) (Math.random() * 101) + 50;
         x = (int) (Math.random() * WIDTH) - size;
         y = (int) (Math.random() * HEIGHT) - size;
-        xShift = 2;
-        yShift = 2;
+        xShift = (int) (Math.random() * 3) + 2;
+        yShift = xShift;
         if (Math.random() > 0.5)
             xShift *= -1;
         if (Math.random() > 0.5)
@@ -51,6 +51,14 @@ public abstract class Shape {
         return y;
     }
 
+    public int getXShift() {
+        return xShift;
+    }
+
+    public int getYShift() {
+        return yShift;
+    }
+
     public int getSize() {
         return size;
     }
@@ -78,5 +86,13 @@ public abstract class Shape {
 
     public void setColor(Color c) {
         color = c;
+    }
+
+    public void setXShift(int xS) {
+        xShift = xS;
+    }
+
+    public void setYShift(int yS) {
+        yShift = yS;
     }
 }
