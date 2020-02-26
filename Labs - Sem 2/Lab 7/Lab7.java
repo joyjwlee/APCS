@@ -1,4 +1,6 @@
 public class Lab7 {
+    static int moves = 1;
+
     // Pre: a string to be checked
     // Post: a boolean telling if it's a palindrome or not
     public boolean isPalindrome(String str) {
@@ -25,10 +27,12 @@ public class Lab7 {
     // Post: instructions on which disk to move and where
     public void datang(int numDisks, char from, char to, char extra) {
         if (numDisks == 1) {
-            System.out.println("Move disk from " + from + " to " + to);
+            System.out.println("Move  " + moves + " || Move disk from " + from + " to " + to);
+            moves++;
         } else {
             datang(numDisks - 1, from, extra, to);
-            System.out.println("Move disk from " + from + " to " + to);
+            System.out.println("Move  " + moves + " || Move disk from " + from + " to " + to);
+            moves++;
             datang(numDisks - 1, extra, to, from);
         }
     }
