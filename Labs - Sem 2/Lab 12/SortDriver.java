@@ -1,10 +1,8 @@
 import java.util.*;
 
 public class SortDriver {
-    // count and comment steps for:
-    // assignment statements
-    // comparisons
-    // method calls
+    // count and comment steps for assignment statements,
+    // and comparisons method calls
     private long steps;
 
     public SortDriver() {
@@ -20,13 +18,16 @@ public class SortDriver {
         int choice = 0;
         while (choice < 7) {
             Scanner keys = new Scanner(System.in);
-            System.out.println("enter number of items");
+            System.out.println("\n===============================");
+            System.out.println("Enter Number of Items: ");
             int size = keys.nextInt();
             int[] list = generateList(size);
             print(list);
 
-            System.out.println("\n1 Bubble,     2 Sort1,        3 Sort2");
-            System.out.println("4 MergeSort,    5 Binary Search,    6 Sequential Search,     7 Quit\n");
+            System.out.println();
+            System.out.println("1: Bubble\t2: Sort1\t\t\t3: Sort2");
+            System.out.println("4: MergeSort\t5: Binary Search\t6: Sequential Search");
+            System.out.println("7: Quit\n");
             choice = keys.nextInt();
             if (choice == 1)
                 bubbleSort(list);
@@ -40,10 +41,12 @@ public class SortDriver {
                 search(list, choice);
             if (choice < 7)
                 print(list);
+            steps = 0;
         }
     }
 
-    // returns a list of size elements with values from 1 to5 * size
+    // Pre: int for array size
+    // Post: returns a list of size elements with values from 1 to 5 * size
     public int[] generateList(int size) {
         steps = 0;
         int[] list = new int[size];
@@ -52,6 +55,8 @@ public class SortDriver {
         return list;
     }
 
+    // Pre: an array
+    // Post: prints the array and how many steps it took
     public void print(int[] list) {
         if (steps > 0)
             System.out.println("This sort took " + steps + " steps to sort " + list.length + " numbers");
@@ -62,10 +67,9 @@ public class SortDriver {
         System.out.println();
     }
 
-    // bubble sort goes through the list comparing two neighboring values and swaps
-    // them if necessary
-    // once the list is gone through once, the biggest is at the end
-    // it then goes through the remaining spots to put the second biggest at the
+    // Bubble sort goes through the list comparing two neighboring values and swaps
+    // them if necessary. Once the list is gone through once, the biggest is at the
+    // end it then goes through the remaining spots to put the second biggest at
     // end, and so on
     public void bubbleSort(int[] list) {
         System.out.println("Bubble Sort");
@@ -132,16 +136,57 @@ public class SortDriver {
             spot = sequentialSearch(list, value);
 
         if (spot >= 0)
-            System.out.println(value + " is at spot " + spot);
+            System.out.println(value + " is at index " + spot);
         else
             System.out.println("value is not in the list");
     }
 
+    // O(log N)
+    // Pre: array filled with values
+    // Post: index of that value, -1 if DNE
     public int binarySearch(int[] list, int value) {
+        System.out.println("Since it's binary search, the list will be sorted");
+        // Arrays.sort(list);
+
+        // Bubble sort here for now
+        for (int outer = list.length - 1; outer >= 0; outer--) {
+            for (int inner = 0; inner < outer; inner++) {
+                if (list[inner] > list[inner + 1]) {
+                    int temp = list[inner];
+                    list[inner] = list[inner + 1];
+                    list[inner + 1] = temp;
+                }
+            }
+        }
+
+        int l = 0, r = list.length - 1;
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+            // If found, return value
+            if (list[m] == value)
+                return m;
+            // Look at right half
+            if (list[m] < value)
+                l = m + 1;
+            // Look at left half
+            else
+                r = m - 1;
+        }
+        // Not found, return -1
         return -1;
     }
 
+    // O(N)
+    // Pre: array filled with values
+    // Post: index of that value, -1 if DNE
     public int sequentialSearch(int[] list, int value) {
+        // Do a linear scan
+        for (int i = 0; i < list.length; i++) {
+            if (list[i] == value) {
+                return i;
+            }
+        }
+        // If not found return -1
         return -1;
     }
 }
