@@ -10,18 +10,18 @@ public class SortDriver {
     }
 
     public static void driver() {
-        SortDriver a = new SortDriver();
+        final SortDriver a = new SortDriver();
         a.go();
     }
 
     public void go() {
         int choice = 0;
         while (choice < 7) {
-            Scanner keys = new Scanner(System.in);
+            final Scanner keys = new Scanner(System.in);
             System.out.println("\n===============================");
             System.out.println("Enter Number of Items: ");
-            int size = keys.nextInt();
-            int[] list = generateList(size);
+            final int size = keys.nextInt();
+            final int[] list = generateList(size);
             print(list);
 
             System.out.println();
@@ -47,9 +47,9 @@ public class SortDriver {
 
     // Pre: int for array size
     // Post: returns a list of size elements with values from 1 to 5 * size
-    public int[] generateList(int size) {
+    public int[] generateList(final int size) {
         steps = 0;
-        int[] list = new int[size];
+        final int[] list = new int[size];
         for (int i = 0; i < size; i++)
             list[i] = (int) (Math.random() * size * 5 + 1);
         return list;
@@ -57,7 +57,7 @@ public class SortDriver {
 
     // Pre: an array
     // Post: prints the array and how many steps it took
-    public void print(int[] list) {
+    public void print(final int[] list) {
         if (steps > 0)
             System.out.println("This sort took " + steps + " steps to sort " + list.length + " numbers");
         if (list.length <= 100) {
@@ -71,7 +71,7 @@ public class SortDriver {
     // them if necessary. Once the list is gone through once, the biggest is at the
     // end it then goes through the remaining spots to put the second biggest at
     // end, and so on
-    public void bubbleSort(int[] list) {
+    public void bubbleSort(final int[] list) {
         System.out.println("Bubble Sort");
         steps++; // outer =
         for (int outer = list.length - 1; outer >= 0; outer--) {
@@ -86,25 +86,25 @@ public class SortDriver {
         }
     }
 
-    public void sort1(int[] list) {
+    public void sort1(final int[] list) {
         System.out.println("Selection Sort");
 
     }
 
-    public void sort2(int[] list) {
+    public void sort2(final int[] list) {
         System.out.println("Insertion Sort");
     }
 
     // swaps list[a] with list[b]
-    public void swap(int[] list, int a, int b) {
+    public void swap(final int[] list, final int a, final int b) {
         steps += 3; // temp =, list[a] =, list[b] =
-        int temp = list[a];
+        final int temp = list[a];
         list[a] = list[b];
         list[b] = temp;
     }
 
     // to sort a portion of a list
-    public void bubble(int[] list, int first, int last) {
+    public void bubble(final int[] list, final int first, final int last) {
         for (int outer = last; outer >= first; outer--) {
             for (int inner = first; inner < outer; inner++) {
                 if (list[inner] > list[inner + 1]) {
@@ -114,21 +114,21 @@ public class SortDriver {
         }
     }
 
-    public void mergeSort(int[] list, int first, int last) {
-        int mid = (first + last) / 2;
+    public void mergeSort(final int[] list, final int first, final int last) {
+        final int mid = (first + last) / 2;
         bubble(list, first, mid);
         bubble(list, mid + 1, last);
         merge(list, first, mid, last);
     }
 
-    public void merge(int[] list, int first, int mid, int last) {
+    public void merge(final int[] list, final int first, final int mid, final int last) {
 
     }
 
-    public void search(int[] list, int choice) {
-        Scanner keys = new Scanner(System.in);
+    public void search(final int[] list, final int choice) {
+        final Scanner keys = new Scanner(System.in);
         System.out.println("Enter an item to search for");
-        int value = keys.nextInt();
+        final int value = keys.nextInt();
         int spot;
         if (choice == 5)
             spot = binarySearch(list, value);
@@ -144,7 +144,7 @@ public class SortDriver {
     // O(log N)
     // Pre: array filled with values
     // Post: index of that value, -1 if DNE
-    public int binarySearch(int[] list, int value) {
+    public int binarySearch(final int[] list, final int value) {
         System.out.println("Since it's binary search, the list will be sorted");
         // Arrays.sort(list);
 
@@ -152,7 +152,7 @@ public class SortDriver {
         for (int outer = list.length - 1; outer >= 0; outer--) {
             for (int inner = 0; inner < outer; inner++) {
                 if (list[inner] > list[inner + 1]) {
-                    int temp = list[inner];
+                    final int temp = list[inner];
                     list[inner] = list[inner + 1];
                     list[inner + 1] = temp;
                 }
@@ -161,7 +161,7 @@ public class SortDriver {
 
         int l = 0, r = list.length - 1;
         while (l <= r) {
-            int m = l + (r - l) / 2;
+            final int m = l + (r - l) / 2;
             // If found, return value
             if (list[m] == value)
                 return m;
@@ -179,7 +179,7 @@ public class SortDriver {
     // O(N)
     // Pre: array filled with values
     // Post: index of that value, -1 if DNE
-    public int sequentialSearch(int[] list, int value) {
+    public int sequentialSearch(final int[] list, final int value) {
         // Do a linear scan
         for (int i = 0; i < list.length; i++) {
             if (list[i] == value) {
