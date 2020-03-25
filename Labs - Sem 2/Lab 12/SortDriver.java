@@ -9,9 +9,9 @@ public class SortDriver {
         steps = 0;
     }
 
-    public static void driver() {
-        final SortDriver a = new SortDriver();
-        a.go();
+    public static void main(String[] args) {
+        final SortDriver lab = new SortDriver();
+        lab.go();
     }
 
     public void go() {
