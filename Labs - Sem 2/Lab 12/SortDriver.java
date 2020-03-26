@@ -86,6 +86,9 @@ public class SortDriver {
         }
     }
 
+    // O(N^2)
+    // Pre: an array
+    // Post: a sorted array
     public void sort1(final int[] list) {
         System.out.println("Selection Sort");
 
@@ -111,6 +114,21 @@ public class SortDriver {
 
     public void sort2(final int[] list) {
         System.out.println("Insertion Sort");
+
+        // loop through entire array
+        steps++; // i =
+        for (int i = 1; i < list.length; i++) {
+            int curr = list[i];
+            int j = i - 1;
+            steps += 4; // i <, i++, curr =, j =
+
+            while (j >= 0 && list[j] > curr) {
+                list[j + 1] = list[j];
+                j--;
+                steps += 4; // j >=, list[j] >, list[j+1] =, j--
+            }
+            list[j + 1] = curr; // list[j+1] =
+        }
     }
 
     // swaps list[a] with list[b]
