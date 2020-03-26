@@ -2,7 +2,7 @@ import java.util.*;
 
 public class SortDriver {
     // count and comment steps for assignment statements,
-    // and comparisons method calls
+    // comparisons, and method calls
     private long steps;
 
     public SortDriver() {
@@ -89,6 +89,24 @@ public class SortDriver {
     public void sort1(final int[] list) {
         System.out.println("Selection Sort");
 
+        // loop through entire array
+        steps++; // i =
+        for (int i = 0; i < list.length; i++) {
+            steps += 3; // i <, i++, j =
+            int smallest = i;
+            // scan through rest of array to find smallest
+            for (int j = i + 1; j < list.length; j++) {
+                steps += 3; // j <, j++, list[j] >
+                if (list[j] < list[smallest]) {
+                    steps++; // update smallest
+                    smallest = j;
+                }
+            }
+
+            // swap placeholder with smallest
+            swap(list, smallest, i);
+            steps++; // swap call
+        }
     }
 
     public void sort2(final int[] list) {
