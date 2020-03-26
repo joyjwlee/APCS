@@ -67,10 +67,9 @@ public class SortDriver {
         System.out.println();
     }
 
-    // Bubble sort goes through the list comparing two neighboring values and swaps
-    // them if necessary. Once the list is gone through once, the biggest is at the
-    // end it then goes through the remaining spots to put the second biggest at
-    // end, and so on
+    // O(N^2)
+    // Pre: an array
+    // Post: a sorted array
     public void bubbleSort(final int[] list) {
         System.out.println("Bubble Sort");
         steps++; // outer =
@@ -112,6 +111,9 @@ public class SortDriver {
         }
     }
 
+    // O(N^2)
+    // Pre: an array
+    // Post: a sorted array
     public void sort2(final int[] list) {
         System.out.println("Insertion Sort");
 
@@ -127,7 +129,8 @@ public class SortDriver {
                 j--;
                 steps += 4; // j >=, list[j] >, list[j+1] =, j--
             }
-            list[j + 1] = curr; // list[j+1] =
+            list[j + 1] = curr;
+            steps++; // list[j+1] =
         }
     }
 
@@ -150,15 +153,64 @@ public class SortDriver {
         }
     }
 
+    // O(N log(N))
+    // Pre: an array
+    // Post: a sorted array
     public void mergeSort(final int[] list, final int first, final int last) {
-        final int mid = (first + last) / 2;
-        bubble(list, first, mid);
-        bubble(list, mid + 1, last);
-        merge(list, first, mid, last);
+        if (first < last) {
+            steps += 4; // mid =, 3 method calls
+            final int mid = (first + last) / 2;
+            mergeSort(list, first, mid);
+            mergeSort(list, mid + 1, last);
+            merge(list, first, mid, last);
+        }
     }
 
+    // Pre: an array with bounds
+    // Post: a merged array
     public void merge(final int[] list, final int first, final int mid, final int last) {
+        // 2 temporary arrays, left and right
+        int n1 = mid - first + 1;
+        int n2 = last - mid;
+        int left[] = new int[n1];
+        int right[] = new int[n2];
+        steps += 4; // n1 =, n2 =, left[] =, right[] =
 
+        // Copy values for left and right arrays
+        for (int i = 0; i < n1; i++) {
+            left[i] = list[first + i];
+        }
+        for (int i = 0; i < n2; i++) {
+            right[i] = list[mid + 1 + i];
+        }
+
+        // Merge the temp arrays, compare first value in both
+        int i = 0, j = 0, k = first;
+        while (i < n1 && j < n2) {
+            // left is smaller, put left in
+            if (left[i] <= right[j]) {
+                list[k] = left[i];
+                i++;
+            }
+            // right is smaller, put right in
+            else {
+                list[k] = right[j];
+                j++;
+            }
+            k++;
+        }
+
+        // Copy remaining elements of left and right arrays
+        while (i < n1) {
+            list[k] = left[i];
+            i++;
+            k++;
+        }
+        while (j < n2) {
+            list[k] = right[j];
+            j++;
+            k++;
+        }
     }
 
     public void search(final int[] list, final int choice) {
