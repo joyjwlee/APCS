@@ -9,7 +9,7 @@ public class SortDriver {
         steps = 0;
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         final SortDriver lab = new SortDriver();
         lab.go();
     }
@@ -120,7 +120,7 @@ public class SortDriver {
         // loop through entire array
         steps++; // i =
         for (int i = 1; i < list.length; i++) {
-            int curr = list[i];
+            final int curr = list[i];
             int j = i - 1;
             steps += 4; // i <, i++, curr =, j =
 
@@ -170,10 +170,10 @@ public class SortDriver {
     // Post: a merged array
     public void merge(final int[] list, final int first, final int mid, final int last) {
         // 2 temporary arrays, left and right
-        int n1 = mid - first + 1;
-        int n2 = last - mid;
-        int left[] = new int[n1];
-        int right[] = new int[n2];
+        final int n1 = mid - first + 1;
+        final int n2 = last - mid;
+        final int left[] = new int[n1];
+        final int right[] = new int[n2];
         steps += 4; // n1 =, n2 =, left[] =, right[] =
 
         // Copy values for left and right arrays
