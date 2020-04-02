@@ -22,25 +22,39 @@ public class CritterRunner {
     public static void main(String[] args) {
         ActorWorld world = new ActorWorld();
 
-        Critter c = new Critter();
+        Mystique a = new Mystique();
+        world.add(a);
+
+        // Mystique b = new Mystique();
+        // world.add(b);
+
+        Nightcrawler c = new Nightcrawler();
         world.add(c);
 
-        Critter d = new Critter();
-        world.add(d);
+        // Nightcrawler d = new Nightcrawler();
+        // world.add(d);
 
-        Bug bob = new Bug();
-        world.add(bob);
+        Magneto e = new Magneto();
+        world.add(e);
 
-        Bug dee = new Bug(Color.YELLOW);
-        world.add(dee);
+        Bug b1 = new Bug();
+        world.add(b1);
 
-        Bug fred = new Bug(Color.GREEN);
-        world.add(fred);
+        Bug b2 = new Bug(Color.YELLOW);
+        world.add(b2);
 
-        Rock r = new Rock();
-        world.add(r);
+        Bug b3 = new Bug(Color.GREEN);
+        world.add(b3);
+
+        Rock r1 = new Rock();
+        world.add(r1);
+
+        Rock r2 = new Rock();
+        world.add(r2);
+
+        Rock r3 = new Rock();
+        world.add(r3);
 
         world.show();
     }
-
 }
