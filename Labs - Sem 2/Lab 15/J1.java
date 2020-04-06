@@ -4,49 +4,57 @@ import java.awt.*;
 import java.util.*;
 
 public class J1 extends Critter {
+    // Starts at 1 for 0mod3
+    int numMoves = 1;
+
     public J1() {
         super();
     }
 
-    // Collects all locations with nothing surrounding it
+    // Collects locations of all critters
+    public ArrayList<Actor> getActors() {
+        int r = getLocation().getRow();
+        int c = getLocation().getCol();
+
+        Grid<Actor> gr = getGrid();
+        ArrayList<Actor> toKill = new ArrayList<Actor>();
+        for (int i = 0; i < gr.getNumRows(); i++) {
+            for (int j = 0; j < gr.getNumCols(); j++) {
+                if (i != r && j != c) {
+                    Location loc = new Location(i, j);
+                    Actor potential = gr.get(loc);
+                    if (potential instanceof Critter) {
+                        toKill.add(potential);
+                    }
+                }
+            }
+        }
+        return toKill;
+    }
+
+    // Kill only once every 3 moves
+    public void processActors(ArrayList<Actor> actors) {
+        numMoves++;
+        int n = actors.size();
+        if (numMoves % 3 == 0 && n != 0) {
+            int r = (int) (Math.random() * n);
+            actors.get(r).removeSelfFromGrid();
+        }
+    }
+
+    // Collects all available locations in the grid
     public ArrayList<Location> getMoveLocations() {
         Grid<Actor> gr = getGrid();
         ArrayList<Location> free = new ArrayList<Location>();
-        // Loop through every location
         for (int i = 0; i < gr.getNumRows(); i++) {
             for (int j = 0; j < gr.getNumCols(); j++) {
-                Location curr = new Location(i, j);
-                int numNeighbors = 0;
-                // Loop through all neighbors
-                for (int k = -1; k < 2; k++) {
-                    for (int l = -1; l < 2; l++) {
-                        int r = i + k;
-                        int c = j + l;
-                        Location around = new Location(r, c);
-                        if (gr.isValid(around)) {
-                            Actor neighbor = gr.get(around);
-                            if (neighbor instanceof Actor) {
-                                numNeighbors++;
-                            }
-                        }
-                    }
-                }
-                // If there are none surrounding it, good to go
-                if (numNeighbors == 0) {
-                    free.add(curr);
+                Location loc = new Location(i, j);
+                Actor neighbor = gr.get(loc);
+                if (gr.isValid(loc) && !(neighbor instanceof Critter)) {
+                    free.add(loc);
                 }
             }
         }
         return free;
-    }
-
-    // If it can't go anywhere, remove itself
-    public void makeMove(Location loc) {
-        ArrayList<Location> moveLocs = getMoveLocations();
-        if (loc == null || moveLocs.size() == 0) {
-            removeSelfFromGrid();
-        } else {
-            moveTo(loc);
-        }
     }
 }
