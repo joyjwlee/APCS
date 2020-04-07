@@ -11,6 +11,17 @@ public class J1 extends Critter {
         super();
     }
 
+    // Get first in array for advantage
+    public Location selectMoveLocation(ArrayList<Location> locs) {
+        int n = locs.size();
+        int r = getLocation().getRow();
+        int c = getLocation().getCol();
+        if (n == 0 || (r == 0 && c == 0)) {
+            return getLocation();
+        }
+        return locs.get(0);
+    }
+
     // Collects locations of all critters
     public ArrayList<Actor> getActors() {
         int r = getLocation().getRow();
