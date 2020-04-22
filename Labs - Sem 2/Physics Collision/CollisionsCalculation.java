@@ -8,14 +8,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     public static final int HEIGHT = 1440;
 
     private JLabel label;
-    private int timer = 0;
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
-    public static Color[] colors = { Color.RED, Color.ORANGE, Color.YELLOW, Color.GREEN, Color.BLUE, Color.MAGENTA };
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
-    private int score = 0;
     private boolean stop = false;
 
     public CollisionsCalculation() {
@@ -28,26 +25,16 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.setFocusable(true);
     }
 
-    // This is the method that runs the game
+    // ! This is the method that runs the game
     public void animate() {
-        // Wall
-        Wall wall = new Wall();
-        boundary.add(wall);
-        // Ground
-        Ground ground = new Ground();
-        boundary.add(ground);
+        // * Makes wall and ground
+        makeBoundary();
 
-        // Configuration stage
+        // ? Configuration stage
+        configuration();
 
-        // Simulation stage
-        while (!stop) {
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException ex) {
-            }
-            // Redraws the screen
-            this.repaint();
-        }
+        // ? Simulation stage
+        simulation();
     }
 
     // Precondition: executed when repaint or paintImmediately is called
@@ -56,6 +43,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         super.paintComponent(page);
         // Wall and ground
         for (Rectangles curr : boundary) {
+            curr.draw(page);
+        }
+        for (Block curr : blocks) {
             curr.draw(page);
         }
     }
@@ -92,4 +82,75 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         moveX = event.getX();
         moveY = event.getY();
     }
+
+    // Makes boundary
+    public void makeBoundary() {
+        // Wall
+        Wall wall = new Wall();
+        boundary.add(wall);
+        // Ground
+        Ground ground = new Ground();
+        boundary.add(ground);
+        // Tick marks along ground
+        for (int i = 0; i <= 200; i++) {
+            Ground tick = new Ground();
+            tick.setX(150 + 10 * i);
+            tick.setY(ground.getY());
+            tick.setW(1);
+            tick.setH(10);
+            if (i % 5 == 0) {
+                tick.setH(15);
+            }
+            if (i % 10 == 0) {
+                tick.setH(20);
+            }
+            boundary.add(tick);
+        }
+    }
+
+    // megamethod of jbuttons and jtextfields
+    public void configuration() {
+        JButton setValues = new JButton("Set Values");
+        setValues.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent ae) {
+                if (!setValues.getText().equals(""))
+                    setValues.setText(setValues.getText());
+                setValues.setVisible(false);
+                initialization();
+
+            }
+        });
+        setValues.setBounds(1500, 150, 180, 70);
+        setValues.setFont(new Font("Serif", Font.BOLD, 35));
+        setValues.setForeground(Color.BLACK);
+        setValues.setBackground(Color.white);
+        setValues.setOpaque(true);
+        setValues.setBorderPainted(true);
+        setValues.setBorder(BorderFactory.createBevelBorder(0, Color.white, Color.white, Color.white, Color.white));
+        this.add(setValues);
+    }
+
+    public void initialization() {
+
+    }
+
+    public void simulation() {
+        // test block
+        Block block = new Block(5, 50, 100);
+        blocks.add(block);
+
+        // test block
+        Block block1 = new Block(50, 250, 100);
+        blocks.add(block1);
+
+        while (!stop) {
+            try {
+                Thread.sleep(10);
+            } catch (InterruptedException ex) {
+            }
+            // Redraws the screen
+            this.repaint();
+        }
+    }
+
 }
