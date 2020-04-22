@@ -1,4 +1,3 @@
-import java.util.*;
 import java.awt.*;
 
 public class Wall extends Rectangles {
@@ -8,6 +7,6 @@ public class Wall extends Rectangles {
 
     public void draw(Graphics g) {
         g.setColor(super.getC());
-        g.fillRect(super.getX(), super.getY(), super.getW(), super.getH());
+        g.fillRect((int) super.getX(), (int) super.getY(), (int) super.getW(), (int) super.getH());
     }
 }

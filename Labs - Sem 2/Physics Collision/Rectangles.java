@@ -1,15 +1,14 @@
-import java.util.*;
 import java.awt.*;
 
 // Used to make wall, ground, and blocks
-public abstract class Rectangles {
+public abstract class Rectangles implements Comparable<Rectangles> {
     // Private instance variables
-    private int x, y; // location
-    private int width, height;
-    private int mass, velocity;
+    private double x, y; // location
+    private double width, height;
+    private double mass, velocity;
     private Color color;
 
-    public Rectangles(int x, int y, int width, int height, int mass, int velocity, Color color) {
+    public Rectangles(double x, double y, double width, double height, double mass, double velocity, Color color) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -23,27 +22,27 @@ public abstract class Rectangles {
     public abstract void draw(Graphics g);
 
     // Getter methods
-    public int getX() {
+    public double getX() {
         return x;
     }
 
-    public int getY() {
+    public double getY() {
         return y;
     }
 
-    public int getW() {
+    public double getW() {
         return width;
     }
 
-    public int getH() {
+    public double getH() {
         return height;
     }
 
-    public int getM() {
+    public double getM() {
         return mass;
     }
 
-    public int getV() {
+    public double getV() {
         return velocity;
     }
 
@@ -52,31 +51,38 @@ public abstract class Rectangles {
     }
 
     // Setter methods
-    public void setX(int n) {
+    public void setX(double n) {
         x = n;
     }
 
-    public void setY(int n) {
+    public void setY(double n) {
         y = n;
     }
 
-    public void setW(int n) {
+    public void setW(double n) {
         width = n;
     }
 
-    public void setH(int n) {
+    public void setH(double n) {
         height = n;
     }
 
-    public void setM(int n) {
+    public void setM(double n) {
         mass = n;
     }
 
-    public void getV(int n) {
+    public void setV(double n) {
         velocity = n;
     }
 
     public void setC(Color n) {
         color = n;
+    }
+
+    // sort by position for collisions
+    @Override
+    public int compareTo(Rectangles other) {
+        int compareage = (int) ((Rectangles) other).getX();
+        return ((int) (this.getX()) - compareage);
     }
 }

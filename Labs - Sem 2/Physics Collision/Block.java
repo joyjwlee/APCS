@@ -1,4 +1,6 @@
-import java.util.*;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.geom.Rectangle2D;
 import java.awt.*;
 
 public class Block extends Rectangles {
@@ -7,8 +9,7 @@ public class Block extends Rectangles {
         super(0, 0, 0, 0, 0, 0, Color.WHITE);
 
         // according to mass, size aysmptotically reaches 300
-        double val = 300 - 1500 / (mass + 5);
-        int size = (int) val;
+        double size = 300 - 1500 / (mass + 5);
 
         // set all of the values
         this.setX(position + 150);
@@ -16,11 +17,14 @@ public class Block extends Rectangles {
         this.setW(size);
         this.setH(size);
         this.setM(mass);
-        this.getV(velocity);
+        this.setV(velocity);
     }
 
+    // double precision to draw rectangle
     public void draw(Graphics g) {
-        g.setColor(super.getC());
-        g.fillRect(super.getX(), super.getY(), super.getW(), super.getH());
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setColor(Color.WHITE);
+        Rectangle2D rect = new Rectangle2D.Double(super.getX(), super.getY(), super.getW(), super.getH());
+        g2.draw(rect);
     }
 }

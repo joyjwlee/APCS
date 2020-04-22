@@ -136,21 +136,58 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     public void simulation() {
         // test block
-        Block block = new Block(5, 50, 100);
+        Block block = new Block(50, 600, 2);
         blocks.add(block);
 
         // test block
-        Block block1 = new Block(50, 250, 100);
+        Block block1 = new Block(5, 200, 3);
         blocks.add(block1);
+
+        // sorts by initial position, since blocks will stay in order forever
+        Collections.sort(blocks);
 
         while (!stop) {
             try {
+                // Move first then update velocity
+                for (Block curr : blocks) {
+                    curr.setX(curr.getX() + curr.getV());
+                }
+
+                // Update velocity, only check to right
+                for (int i = 0; i < blocks.size() - 1; i++) {
+                    Block curr = blocks.get(i);
+                    // Bounce off wall
+                    if (curr.getX() < 150) {
+                        curr.setV(curr.getV() * -1);
+                    }
+
+                    // If there is a collision, update velocities
+                    Block right = blocks.get(i + 1);
+                    if (curr.getX() + curr.getW() >= right.getX()) {
+                        double m1 = curr.getM();
+                        double v1 = curr.getV();
+                        double m2 = right.getM();
+                        double v2 = right.getV();
+                        curr.setV(calculateVelocity(m1, v1, m2, v2));
+                        right.setV(calculateVelocity(m2, v2, m1, v1));
+                        i++;
+                    }
+                }
                 Thread.sleep(10);
             } catch (InterruptedException ex) {
             }
-            // Redraws the screen
+
+            // redraw screen
             this.repaint();
         }
+
     }
 
+    // returns velocity for body 1
+    // after elastic collision
+    public double calculateVelocity(double m1, double v1, double m2, double v2) {
+        double first = ((m1 - m2) / (m1 + m2)) * v1;
+        double second = ((2 * m2) / (m1 + m2)) * v2;
+        return (first + second);
+    }
 }
