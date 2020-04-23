@@ -5,7 +5,7 @@ import java.awt.image.*;
 public class CollisionsDriver {
     public static void main(String[] args) {
         // create a JFrame (window) that will be visible on screen
-        JFrame frame = new JFrame("Collision Simulator");
+        JFrame frame = new JFrame("Elastic Collision Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make the red close button work
         frame.setLocation(50, 50); // place the frame in the upper left corner
 

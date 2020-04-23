@@ -4,16 +4,15 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class CollisionsCalculation extends JPanel implements MouseListener, MouseMotionListener {
-    public static final int WIDTH = 2560;
-    public static final int HEIGHT = 1440;
+    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 1080;
 
-    private JLabel label;
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
-    private boolean stop = false;
+    private boolean start = false, stop = false;
 
     public CollisionsCalculation() {
         this.setLayout(null);
@@ -25,15 +24,15 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.setFocusable(true);
     }
 
-    // ! This is the method that runs the game
+    // method to run simulation
     public void animate() {
-        // * Makes wall and ground
+        // makes wall and ground
         makeBoundary();
 
-        // ? Configuration stage
+        // configuration stage; only "start" button for now
         configuration();
 
-        // ? Simulation stage
+        // simulation stage
         simulation();
     }
 
@@ -45,6 +44,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         for (Rectangles curr : boundary) {
             curr.draw(page);
         }
+        // Blocks
         for (Block curr : blocks) {
             curr.draw(page);
         }
@@ -110,14 +110,14 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // megamethod of jbuttons and jtextfields
     public void configuration() {
-        JButton setValues = new JButton("Set Values");
+        JButton setValues = new JButton("START");
         setValues.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent ae) {
                 if (!setValues.getText().equals(""))
                     setValues.setText(setValues.getText());
                 setValues.setVisible(false);
                 initialization();
-
+                start = true;
             }
         });
         setValues.setBounds(1500, 150, 180, 70);
@@ -130,8 +130,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.add(setValues);
     }
 
+    // work on later perhaps...
     public void initialization() {
-
     }
 
     public void simulation() {
@@ -140,11 +140,16 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         blocks.add(block);
 
         // test block
-        Block block1 = new Block(5, 200, 3);
+        Block block1 = new Block(5, 400, -5);
         blocks.add(block1);
 
         // sorts by initial position, since blocks will stay in order forever
         Collections.sort(blocks);
+
+        // don't move on until start is pressed
+        while (!start) {
+            this.repaint();
+        }
 
         while (!stop) {
             try {
