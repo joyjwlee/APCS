@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.*;
 
 public class CollisionsDriver {
     public static void main(String[] args) {
@@ -9,7 +8,7 @@ public class CollisionsDriver {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make the red close button work
         frame.setLocation(50, 50); // place the frame in the upper left corner
 
-        CollisionsCalculation engine = new CollisionsCalculation();
+        CollisionsCalculation engine = new CollisionsCalculation(); // create the object to run
 
         frame.setPreferredSize(new Dimension(1920, 1080)); // set frame 1920x1080
         frame.setResizable(false); // cannot resize

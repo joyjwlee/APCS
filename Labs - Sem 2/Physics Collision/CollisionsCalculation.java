@@ -12,7 +12,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
-    private boolean start = false, stop = false;
+    private boolean start = false;
+    private final boolean stop = false;
 
     public CollisionsCalculation() {
         this.setLayout(null);
@@ -38,47 +39,47 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // Precondition: executed when repaint or paintImmediately is called
     // Postcondition: the screen has been updated
-    public void paintComponent(Graphics page) {
+    public void paintComponent(final Graphics page) {
         super.paintComponent(page);
         // Wall and ground
-        for (Rectangles curr : boundary) {
+        for (final Rectangles curr : boundary) {
             curr.draw(page);
         }
         // Blocks
-        for (Block curr : blocks) {
+        for (final Block curr : blocks) {
             curr.draw(page);
         }
     }
 
     // this method is called whenever the mouse button is pressed
-    public void mousePressed(MouseEvent event) {
+    public void mousePressed(final MouseEvent event) {
         mouseX = event.getX(); // returns the x coordinate of the cursor when the mouse is clicked
         mouseY = event.getY(); // returns the y coordinate of the cursor when the mouse is clicked
     }
 
     // required for compiling; do not use
-    public void mouseClicked(MouseEvent event) {
+    public void mouseClicked(final MouseEvent event) {
     }
 
     // required for compiling; do not use
-    public void mouseReleased(MouseEvent event) {
+    public void mouseReleased(final MouseEvent event) {
     }
 
     // required for compiling; do not use
-    public void mouseEntered(MouseEvent event) {
+    public void mouseEntered(final MouseEvent event) {
     }
 
     // required for compiling; do not use
-    public void mouseExited(MouseEvent event) {
+    public void mouseExited(final MouseEvent event) {
     }
 
     // MouseMotionListener Stuff: constantly update whenver mouse is moved
-    public void mouseMoved(MouseEvent event) {
+    public void mouseMoved(final MouseEvent event) {
         moveX = event.getX();
         moveY = event.getY();
     }
 
-    public void mouseDragged(MouseEvent event) {
+    public void mouseDragged(final MouseEvent event) {
         moveX = event.getX();
         moveY = event.getY();
     }
@@ -86,14 +87,14 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // Makes boundary
     public void makeBoundary() {
         // Wall
-        Wall wall = new Wall();
+        final Wall wall = new Wall();
         boundary.add(wall);
         // Ground
-        Ground ground = new Ground();
+        final Ground ground = new Ground();
         boundary.add(ground);
         // Tick marks along ground
         for (int i = 0; i <= 200; i++) {
-            Ground tick = new Ground();
+            final Ground tick = new Ground();
             tick.setX(150 + 10 * i);
             tick.setY(ground.getY());
             tick.setW(1);
@@ -110,9 +111,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // megamethod of jbuttons and jtextfields
     public void configuration() {
-        JButton setValues = new JButton("START");
+        final JButton setValues = new JButton("START");
         setValues.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent ae) {
+            public void actionPerformed(final ActionEvent ae) {
                 if (!setValues.getText().equals(""))
                     setValues.setText(setValues.getText());
                 setValues.setVisible(false);
@@ -136,11 +137,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     public void simulation() {
         // test block
-        Block block = new Block(50, 600, 2);
+        final Block block = new Block(50, 600, 2);
         blocks.add(block);
 
         // test block
-        Block block1 = new Block(5, 400, -5);
+        final Block block1 = new Block(5, 400, -5);
         blocks.add(block1);
 
         // sorts by initial position, since blocks will stay in order forever
@@ -154,32 +155,32 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         while (!stop) {
             try {
                 // Move first then update velocity
-                for (Block curr : blocks) {
+                for (final Block curr : blocks) {
                     curr.setX(curr.getX() + curr.getV());
                 }
 
                 // Update velocity, only check to right
                 for (int i = 0; i < blocks.size() - 1; i++) {
-                    Block curr = blocks.get(i);
+                    final Block curr = blocks.get(i);
                     // Bounce off wall
                     if (curr.getX() < 150) {
                         curr.setV(curr.getV() * -1);
                     }
 
                     // If there is a collision, update velocities
-                    Block right = blocks.get(i + 1);
+                    final Block right = blocks.get(i + 1);
                     if (curr.getX() + curr.getW() >= right.getX()) {
-                        double m1 = curr.getM();
-                        double v1 = curr.getV();
-                        double m2 = right.getM();
-                        double v2 = right.getV();
+                        final double m1 = curr.getM();
+                        final double v1 = curr.getV();
+                        final double m2 = right.getM();
+                        final double v2 = right.getV();
                         curr.setV(calculateVelocity(m1, v1, m2, v2));
                         right.setV(calculateVelocity(m2, v2, m1, v1));
                         i++;
                     }
                 }
                 Thread.sleep(10);
-            } catch (InterruptedException ex) {
+            } catch (final InterruptedException ex) {
             }
 
             // redraw screen
@@ -190,9 +191,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // returns velocity for body 1
     // after elastic collision
-    public double calculateVelocity(double m1, double v1, double m2, double v2) {
-        double first = ((m1 - m2) / (m1 + m2)) * v1;
-        double second = ((2 * m2) / (m1 + m2)) * v2;
+    public double calculateVelocity(final double m1, final double v1, final double m2, final double v2) {
+        final double first = ((m1 - m2) / (m1 + m2)) * v1;
+        final double second = ((2 * m2) / (m1 + m2)) * v2;
         return (first + second);
     }
 }
