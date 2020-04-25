@@ -9,6 +9,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
+    int numB = 0;
+    private JLabel label;
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
@@ -23,6 +25,15 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.setFocusable(true);
+
+        // create and format a JLabel to display a timer
+        label = new JLabel("");
+        this.add(label);
+        label.setVisible(true);
+        label.setFont(new Font("Arial", Font.BOLD, 30));
+        label.setBounds(400, 30, 200, 30);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setForeground(Color.BLACK);
     }
 
     // method to run simulation
@@ -182,6 +193,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 Thread.sleep(10);
             } catch (final InterruptedException ex) {
             }
+
+            // set label text
+            label.setText("Number of blocks: " + numB);
 
             // redraw screen
             this.repaint();
