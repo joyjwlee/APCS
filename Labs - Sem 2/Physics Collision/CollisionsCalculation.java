@@ -12,7 +12,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
     int numB = 0;
-    private JLabel label;
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
@@ -27,15 +26,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.setFocusable(true);
-
-        // create and format a JLabel to display a timer
-        // label = new JLabel("");
-        // this.add(label);
-        // label.setVisible(true);
-        // label.setFont(new Font("Arial", Font.BOLD, 30));
-        // label.setBounds(400, 30, 200, 30);
-        // label.setHorizontalAlignment(SwingConstants.CENTER);
-        // label.setForeground(FOREGROUNDCOLOR);
     }
 
     // method to run simulation
@@ -44,7 +34,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         makeBoundary();
 
         // configuration stage
-        configuration();
+        makeBlocks();
 
         // wait to start
         startButton();
@@ -125,11 +115,35 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
     }
 
-    // megamethod of jbuttons and jtextfields
-    public void configuration() {
+    // configure the blocks
+    public void makeBlocks() {
+        // following code works for text
+        // JLabel label = new JLabel("");
+        // this.add(label);
+        // label.setVisible(true);
+        // label.setFont(new Font("Arial", Font.BOLD, 30));
+        // label.setBounds(400, 30, 200, 30);
+        // label.setHorizontalAlignment(SwingConstants.CENTER);
+        // label.setForeground(FOREGROUNDCOLOR);
+        // label.setText("sup");
 
+        // text field -- doesn't work :(
+        JPanel jp = new JPanel();
+        JLabel jl = new JLabel();
+        JTextField jt = new JTextField();
+        jp.add(jt);
+        this.add(jp);
+
+        // test block
+        final Block block = new Block(50, 600, 2, FOREGROUNDCOLOR);
+        blocks.add(block);
+
+        // test block
+        final Block block1 = new Block(5, 400, -5, FOREGROUNDCOLOR);
+        blocks.add(block1);
     }
 
+    // megamethod of jbuttons and jtextfields
     public void startButton() {
         final JButton setValues = new JButton("START");
         setValues.addActionListener(new ActionListener() {
@@ -151,14 +165,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         setValues.setBorder(
                 BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
         this.add(setValues);
-
-        // test block
-        final Block block = new Block(50, 600, 2, FOREGROUNDCOLOR);
-        blocks.add(block);
-
-        // test block
-        final Block block1 = new Block(5, 400, -5, FOREGROUNDCOLOR);
-        blocks.add(block1);
 
         // don't move on until start is pressed
         while (!start) {
