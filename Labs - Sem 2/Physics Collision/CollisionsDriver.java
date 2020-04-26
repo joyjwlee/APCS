@@ -2,9 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class CollisionsDriver {
+    static JFrame frame;
+
     public static void main(String[] args) {
         // create a JFrame (window) that will be visible on screen
-        JFrame frame = new JFrame("Elastic Collision Simulator");
+        frame = new JFrame("Elastic Collision Simulator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // make the red close button work
         frame.setLocation(50, 50); // place the frame in the upper left corner
 
@@ -16,5 +18,9 @@ public class CollisionsDriver {
         frame.pack();
         frame.setVisible(true);
         engine.animate();// call the playGame() method to intitiate the game
+    }
+
+    public static JFrame getFrame() {
+        return frame;
     }
 }

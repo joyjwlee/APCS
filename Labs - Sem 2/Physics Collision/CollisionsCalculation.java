@@ -15,8 +15,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
+    private boolean configured = false;
     private boolean start = false;
-    private final boolean stop = false;
+    private boolean stop = false;
 
     public CollisionsCalculation() {
         this.setLayout(null);
@@ -128,11 +129,48 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // label.setText("sup");
 
         // text field -- doesn't work :(
-        JPanel jp = new JPanel();
-        JLabel jl = new JLabel();
-        JTextField jt = new JTextField();
-        jp.add(jt);
-        this.add(jp);
+        // JPanel jp = new JPanel();
+        // JLabel jl = new JLabel();
+        // JTextField jt = new JTextField();
+        // jp.add(jt);
+        // this.add(jp);
+
+        // hopefully this works?
+        JFrame frame = CollisionsDriver.getFrame();
+        // submit button
+        JButton mass_1 = new JButton("Enter");
+        mass_1.setBounds(150, 100, 140, 40);
+
+        // enter name label
+        JLabel label = new JLabel();
+        label.setText("Enter left box mass :");
+        label.setBounds(10, 10, 100, 100);
+
+        // empty label which will show event after button clicked
+        JLabel label1 = new JLabel();
+        label1.setBounds(10, 110, 200, 100);
+        // textfield to enter name
+        JTextField textfield = new JTextField();
+        textfield.setBounds(110, 50, 200, 30);
+        // add to frame
+        frame.add(label1);
+        frame.add(textfield);
+        frame.add(label);
+        frame.add(mass_1);
+
+        // action listener
+        mass_1.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                String textFieldValue = textfield.getText();
+                label1.setText("Input:\t" + textFieldValue);
+            }
+        });
+        // end
+
+        // while (!configured) {
+        // this.repaint();
+        // }
 
         // test block
         final Block block = new Block(50, 600, 2, FOREGROUNDCOLOR);
@@ -175,6 +213,12 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     public void simulation() {
         // sorts by initial position, since blocks will stay in order forever
         Collections.sort(blocks);
+
+        // TRY TO FIGURE OUT INITIALIZATION HERE
+        try {
+            Thread.sleep(10000);
+        } catch (final InterruptedException ex) {
+        }
 
         while (!stop) {
             try {
