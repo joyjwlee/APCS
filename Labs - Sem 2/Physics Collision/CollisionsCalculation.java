@@ -6,6 +6,8 @@ import java.awt.event.*;
 public class CollisionsCalculation extends JPanel implements MouseListener, MouseMotionListener {
     public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
+    public static final Color BACKGROUNDCOLOR = Color.black;
+    public static final Color FOREGROUNDCOLOR = Color.white;
 
     int mouseX = 0, mouseY = 0;
     int moveX = 0, moveY = 0;
@@ -19,7 +21,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     public CollisionsCalculation() {
         this.setLayout(null);
-        this.setBackground(Color.BLACK);
+        this.setBackground(BACKGROUNDCOLOR);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
 
         this.addMouseListener(this);
@@ -27,13 +29,13 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.setFocusable(true);
 
         // create and format a JLabel to display a timer
-        label = new JLabel("");
-        this.add(label);
-        label.setVisible(true);
-        label.setFont(new Font("Arial", Font.BOLD, 30));
-        label.setBounds(400, 30, 200, 30);
-        label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setForeground(Color.BLACK);
+        // label = new JLabel("");
+        // this.add(label);
+        // label.setVisible(true);
+        // label.setFont(new Font("Arial", Font.BOLD, 30));
+        // label.setBounds(400, 30, 200, 30);
+        // label.setHorizontalAlignment(SwingConstants.CENTER);
+        // label.setForeground(FOREGROUNDCOLOR);
     }
 
     // method to run simulation
@@ -41,8 +43,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // makes wall and ground
         makeBoundary();
 
-        // configuration stage; only "start" button for now
+        // configuration stage
         configuration();
+
+        // wait to start
+        startButton();
 
         // simulation stage
         simulation();
@@ -98,14 +103,14 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // Makes boundary
     public void makeBoundary() {
         // Wall
-        final Wall wall = new Wall();
+        final Wall wall = new Wall(FOREGROUNDCOLOR);
         boundary.add(wall);
         // Ground
-        final Ground ground = new Ground();
+        final Ground ground = new Ground(FOREGROUNDCOLOR);
         boundary.add(ground);
         // Tick marks along ground
         for (int i = 0; i <= 200; i++) {
-            final Ground tick = new Ground();
+            final Ground tick = new Ground(FOREGROUNDCOLOR);
             tick.setX(150 + 10 * i);
             tick.setY(ground.getY());
             tick.setW(1);
@@ -122,46 +127,48 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // megamethod of jbuttons and jtextfields
     public void configuration() {
+
+    }
+
+    public void startButton() {
         final JButton setValues = new JButton("START");
         setValues.addActionListener(new ActionListener() {
+            // if clicked
             public void actionPerformed(final ActionEvent ae) {
-                if (!setValues.getText().equals(""))
+                if (!setValues.getText().equals("")) {
                     setValues.setText(setValues.getText());
+                }
                 setValues.setVisible(false);
-                initialization();
                 start = true;
             }
         });
         setValues.setBounds(1500, 150, 180, 70);
         setValues.setFont(new Font("Serif", Font.BOLD, 35));
-        setValues.setForeground(Color.BLACK);
-        setValues.setBackground(Color.white);
+        setValues.setForeground(BACKGROUNDCOLOR);
+        setValues.setBackground(FOREGROUNDCOLOR);
         setValues.setOpaque(true);
         setValues.setBorderPainted(true);
-        setValues.setBorder(BorderFactory.createBevelBorder(0, Color.white, Color.white, Color.white, Color.white));
+        setValues.setBorder(
+                BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
         this.add(setValues);
-    }
 
-    // work on later perhaps...
-    public void initialization() {
-    }
-
-    public void simulation() {
         // test block
-        final Block block = new Block(50, 600, 2);
+        final Block block = new Block(50, 600, 2, FOREGROUNDCOLOR);
         blocks.add(block);
 
         // test block
-        final Block block1 = new Block(5, 400, -5);
+        final Block block1 = new Block(5, 400, -5, FOREGROUNDCOLOR);
         blocks.add(block1);
-
-        // sorts by initial position, since blocks will stay in order forever
-        Collections.sort(blocks);
 
         // don't move on until start is pressed
         while (!start) {
             this.repaint();
         }
+    }
+
+    public void simulation() {
+        // sorts by initial position, since blocks will stay in order forever
+        Collections.sort(blocks);
 
         while (!stop) {
             try {
@@ -193,9 +200,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 Thread.sleep(10);
             } catch (final InterruptedException ex) {
             }
-
-            // set label text
-            label.setText("Number of blocks: " + numB);
 
             // redraw screen
             this.repaint();

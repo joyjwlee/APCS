@@ -4,9 +4,9 @@ import java.awt.geom.Rectangle2D;
 import java.awt.*;
 
 public class Block extends Rectangles {
-    public Block(int mass, int position, int velocity) {
+    public Block(int mass, int position, int velocity, Color c) {
         // call constructor
-        super(0, 0, 0, 0, 0, 0, Color.WHITE);
+        super(0, 0, 0, 0, 0, 0, c);
 
         // according to mass, size aysmptotically reaches 300
         double size = 300 - 1500 / (mass + 5);
@@ -23,8 +23,8 @@ public class Block extends Rectangles {
     // double precision to draw rectangle
     public void draw(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
-        g2.setColor(Color.WHITE);
-        Rectangle2D rect = new Rectangle2D.Double(super.getX(), super.getY(), super.getW(), super.getH());
+        g2.setColor(this.getC());
+        Rectangle2D rect = new Rectangle2D.Double(this.getX(), this.getY(), this.getW(), this.getH());
         g2.draw(rect);
     }
 }
