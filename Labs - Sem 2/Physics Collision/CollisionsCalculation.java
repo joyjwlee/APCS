@@ -173,7 +173,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // }
 
         // test block
-        final Block block = new Block(50, 600, 2, FOREGROUNDCOLOR);
+        final Block block = new Block(50, 600, -7, FOREGROUNDCOLOR);
         blocks.add(block);
 
         // test block
@@ -216,7 +216,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
         // TRY TO FIGURE OUT INITIALIZATION HERE
         try {
-            Thread.sleep(10000);
+            Thread.sleep(3000);
         } catch (final InterruptedException ex) {
         }
 
@@ -224,7 +224,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
             try {
                 // Move first then update velocity
                 for (final Block curr : blocks) {
-                    curr.setX(curr.getX() + curr.getV());
+                    curr.setX(curr.getX() + curr.getV() / 10);
                 }
 
                 // Update velocity, only check to right
@@ -247,7 +247,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                         i++;
                     }
                 }
-                Thread.sleep(10);
+                Thread.sleep(1);
             } catch (final InterruptedException ex) {
             }
 
