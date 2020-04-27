@@ -216,7 +216,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
         // TRY TO FIGURE OUT INITIALIZATION HERE
         try {
-            Thread.sleep(3000);
+            Thread.sleep(1500);
         } catch (final InterruptedException ex) {
         }
 
