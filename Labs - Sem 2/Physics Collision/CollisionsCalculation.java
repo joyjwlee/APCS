@@ -185,12 +185,16 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // }
 
         // test block
-        final Block block = new Block(50, 600, -7, FOREGROUNDCOLOR);
+        final Block block = new Block(50, 700, -7, FOREGROUNDCOLOR);
         blocks.add(block);
 
         // test block
-        final Block block1 = new Block(5, 400, -5, FOREGROUNDCOLOR);
+        final Block block1 = new Block(5, 500, -5, FOREGROUNDCOLOR);
         blocks.add(block1);
+
+        // test block
+        final Block block2 = new Block(3, 100, 4, FOREGROUNDCOLOR);
+        blocks.add(block2);
     }
 
     // megamethod of jbuttons and jtextfields
@@ -259,7 +263,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                     final Block right = blocks.get(i + 1);
                     // Bounce off wall
                     if (curr.getX() < 150) {
-                        curr.setV(curr.getV() * -1);
+                        curr.setV(Math.abs(curr.getV()));
                     }
                     // If there is a collision, update velocities
                     if (curr.getX() + curr.getW() >= right.getX()) {
