@@ -9,12 +9,18 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     public static final Color BACKGROUNDCOLOR = Color.black;
     public static final Color FOREGROUNDCOLOR = Color.white;
 
-    int mouseX = 0, mouseY = 0;
-    int moveX = 0, moveY = 0;
-    int numB = 0;
+    // int variables
+    int mouseX = 0, mouseY = 0; // click
+    int moveX = 0, moveY = 0; // drag
+    int numB = 0; // number of blocks
+    int selectedBlock = 0; // selected blocks; 0 is no selected
+
+    // arraylists
     ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
+
+    // boolean variables
     private boolean configured = false;
     private boolean start = false;
     private boolean stop = false;
@@ -58,10 +64,26 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
     }
 
-    // this method is called whenever the mouse button is pressed
+    // called whenever the mouse is clicked; update x and y coordinates
     public void mousePressed(final MouseEvent event) {
-        mouseX = event.getX(); // returns the x coordinate of the cursor when the mouse is clicked
-        mouseY = event.getY(); // returns the y coordinate of the cursor when the mouse is clicked
+        mouseX = event.getX();
+        mouseY = event.getY();
+
+        // sort based on position first then update selected
+        Collections.sort(blocks);
+        int temp = selectedBlock;
+        for (int i = 0; i < blocks.size(); i++) {
+            Block curr = blocks.get(i);
+            if (curr.getX() <= mouseX && mouseX <= curr.getX() + curr.getW()) {
+                if (curr.getY() <= mouseY && mouseY <= curr.getY() + curr.getH()) {
+                    selectedBlock = i + 1; // 1 based for user
+                }
+            }
+        }
+        // if click but no change, reset
+        if (temp == selectedBlock) {
+            selectedBlock = 0;
+        }
     }
 
     // required for compiling; do not use
@@ -118,16 +140,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // configure the blocks
     public void makeBlocks() {
-        // following code works for text
-        // JLabel label = new JLabel("");
-        // this.add(label);
-        // label.setVisible(true);
-        // label.setFont(new Font("Arial", Font.BOLD, 30));
-        // label.setBounds(400, 30, 200, 30);
-        // label.setHorizontalAlignment(SwingConstants.CENTER);
-        // label.setForeground(FOREGROUNDCOLOR);
-        // label.setText("sup");
-
         // text field -- doesn't work :(
         // JPanel jp = new JPanel();
         // JLabel jl = new JLabel();
@@ -204,9 +216,23 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
         this.add(setValues);
 
+        // test text label
+        JLabel label = new JLabel("");
+        this.add(label);
+        label.setVisible(true);
+        label.setFont(new Font("Arial", Font.BOLD, 30));
+        label.setBounds(400, 30, 200, 30);
+        label.setHorizontalAlignment(SwingConstants.CENTER);
+        label.setForeground(FOREGROUNDCOLOR);
+
         // don't move on until start is pressed
         while (!start) {
             this.repaint();
+            if (selectedBlock == 0) {
+                label.setText("None selected");
+            } else {
+                label.setText("Block: " + selectedBlock);
+            }
         }
     }
 
@@ -230,13 +256,12 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 // Update velocity, only check to right
                 for (int i = 0; i < blocks.size() - 1; i++) {
                     final Block curr = blocks.get(i);
+                    final Block right = blocks.get(i + 1);
                     // Bounce off wall
                     if (curr.getX() < 150) {
                         curr.setV(curr.getV() * -1);
                     }
-
                     // If there is a collision, update velocities
-                    final Block right = blocks.get(i + 1);
                     if (curr.getX() + curr.getW() >= right.getX()) {
                         final double m1 = curr.getM();
                         final double v1 = curr.getV();
@@ -254,7 +279,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
             // redraw screen
             this.repaint();
         }
-
     }
 
     // returns velocity for body 1
