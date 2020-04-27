@@ -184,17 +184,10 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // this.repaint();
         // }
 
-        // test block
-        final Block block = new Block(50, 700, -7, FOREGROUNDCOLOR);
-        blocks.add(block);
-
-        // test block
-        final Block block1 = new Block(5, 500, -5, FOREGROUNDCOLOR);
-        blocks.add(block1);
-
-        // test block
-        final Block block2 = new Block(3, 100, 4, FOREGROUNDCOLOR);
-        blocks.add(block2);
+        // test blocks
+        blocks.add(new Block(50, 700, -7, FOREGROUNDCOLOR));
+        blocks.add(new Block(5, 500, -5, FOREGROUNDCOLOR));
+        blocks.add(new Block(3, 100, 4, FOREGROUNDCOLOR));
     }
 
     // megamethod of jbuttons and jtextfields
