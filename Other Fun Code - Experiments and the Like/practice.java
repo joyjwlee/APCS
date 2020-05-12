@@ -112,3 +112,59 @@ public ArrayList<String> egregiousUsers() {
         - Analyzer, have a public arraylist of string and a method that updates list of egregious users  
     */
 }
+
+//May 12 practice FRQ
+
+public int countOnlyBlueCards() {
+    int ans = 0;
+    for (int i = 0; i < deck.size(); i++) {
+        if (deck.get(i).getColor().equals(BLUE)) {
+            ans++;
+        }
+    }
+    return ans;
+}
+
+public ArrayList<Card> updateDeck(ArrayList<Card> pack) {
+    ArrayList<Card> unused = new ArrayList<Card>();
+    while(pack.size() > 0) {
+        Card curr = pack.remove(0);
+        boolean duplicate = false;
+        boolean added = false;
+        
+        //see if duplicate or not
+        for (int i = 0; i < deck.size(); i++) {
+            if (deck.get(i).getName().equals(curr.getName())) {
+                duplicate = true;
+                unused.add(curr);
+            }
+        }
+
+        //add if not duplicate
+        if (!duplicate) {
+            for (int i = 0; i < deck.size(); i++) {
+                if (curr.getName().compareTo(deck.get(i).getName()) < 0) {
+                    deck.add(i, curr);
+                    added = true;
+                    break;
+                }
+            }
+        }
+
+        if (!duplicate && !added) {
+            deck.add(curr);
+        }
+    }
+    return unused;
+}
+
+//method header:
+public int playerWithMostOfOneColor(PlayerDeck[] players) {
+    //code
+    /*
+        Modifications:
+        - array of final strings in PlayerDeck to have all colors
+        - for loop that runs through each color for each player
+        - rename countOnlyBlue and pass parameter as a color; change method so that it compares to the passed color 
+    */
+}
