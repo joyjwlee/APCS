@@ -244,32 +244,34 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
 
         while (!stop) {
-            try {
-                // Move first then update velocity
-                for (Block curr : blocks) {
-                    curr.setX(curr.getX() + curr.getV() / 10);
-                }
+            // Move first then update velocity
+            for (Block curr : blocks) {
+                curr.setX(curr.getX() + curr.getV() / 10);
+            }
 
-                // Update velocity, only check to right
-                for (int i = 0; i < blocks.size() - 1; i++) {
-                    Block curr = blocks.get(i);
-                    Block right = blocks.get(i + 1);
-                    // Bounce off wall
-                    if (curr.getX() < 150) {
-                        curr.setV(Math.abs(curr.getV()));
-                    }
-                    // If there is a collision, update velocities
-                    if (curr.getX() + curr.getW() >= right.getX()) {
-                        double m1 = curr.getM();
-                        double v1 = curr.getV();
-                        double m2 = right.getM();
-                        double v2 = right.getV();
-                        curr.setV(calculateVelocity(m1, v1, m2, v2));
-                        right.setV(calculateVelocity(m2, v2, m1, v1));
-                        i++;
-                    }
+            // Update velocity, only check to right
+            for (int i = 0; i < blocks.size() - 1; i++) {
+                Block curr = blocks.get(i);
+                Block right = blocks.get(i + 1);
+                // Bounce off wall
+                if (curr.getX() < 150) {
+                    curr.setV(Math.abs(curr.getV()));
                 }
-                Thread.sleep(1);
+                // If there is a collision, update velocities
+                if (curr.getX() + curr.getW() >= right.getX()) {
+                    double m1 = curr.getM();
+                    double v1 = curr.getV();
+                    double m2 = right.getM();
+                    double v2 = right.getV();
+                    curr.setV(calculateVelocity(m1, v1, m2, v2));
+                    right.setV(calculateVelocity(m2, v2, m1, v1));
+                    i++;
+                }
+            }
+
+            // try catch
+            try {
+                Thread.sleep(0, 10);
             } catch (InterruptedException ex) {
             }
 
