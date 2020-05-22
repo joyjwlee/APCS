@@ -25,6 +25,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     private boolean start = false;
     private boolean stop = false;
 
+    // constructor
     public CollisionsCalculation() {
         this.setLayout(null);
         this.setBackground(BACKGROUNDCOLOR);
