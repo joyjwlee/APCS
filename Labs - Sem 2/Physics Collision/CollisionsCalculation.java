@@ -36,7 +36,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.setFocusable(true);
     }
 
-    // method to run simulation
+    // MAIN METHOD, ALL METHODS IN HERE!!
     public void animate() {
         // makes wall and ground
         makeBoundary();
