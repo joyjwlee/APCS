@@ -4,10 +4,11 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class CollisionsCalculation extends JPanel implements MouseListener, MouseMotionListener {
-    public static int WIDTH = 1920;
-    public static int HEIGHT = 1080;
-    public static Color BACKGROUNDCOLOR = Color.black;
-    public static Color FOREGROUNDCOLOR = Color.white;
+    // static final variables
+    public static final int WIDTH = 1920;
+    public static final int HEIGHT = 1080;
+    public static final Color BACKGROUNDCOLOR = Color.black;
+    public static final Color FOREGROUNDCOLOR = Color.white;
 
     // int variables
     int mouseX = 0, mouseY = 0; // click
