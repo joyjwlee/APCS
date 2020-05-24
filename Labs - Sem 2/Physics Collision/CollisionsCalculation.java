@@ -282,6 +282,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
     }
 
+    // returns true if blocks intersect
+    public boolean intersects(Block left, Block right) {
+        return true;
+    }
+
     // returns velocity for body 1
     // after elastic collision
     public double calculateVelocity(double m1, double v1, double m2, double v2) {
