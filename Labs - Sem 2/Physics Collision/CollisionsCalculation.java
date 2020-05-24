@@ -260,7 +260,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                     curr.setV(Math.abs(curr.getV()));
                 }
                 // If there is a collision, update velocities
-                if (curr.getX() + curr.getW() >= right.getX()) {
+                if (intersects(curr, right)) {
                     double m1 = curr.getM();
                     double v1 = curr.getV();
                     double m2 = right.getM();
@@ -284,7 +284,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // returns true if blocks intersect
     public boolean intersects(Block left, Block right) {
-        return true;
+        return (left.getX() + left.getW() >= right.getX());
     }
 
     // returns velocity for body 1
