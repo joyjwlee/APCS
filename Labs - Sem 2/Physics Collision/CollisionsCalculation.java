@@ -1,5 +1,7 @@
 /*
-
+TODO:
+- double precision, do overhaul
+- configuration stage
 */
 
 import java.util.*;
@@ -35,7 +37,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         this.setLayout(null);
         this.setBackground(BACKGROUNDCOLOR);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
         this.setFocusable(true);
