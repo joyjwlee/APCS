@@ -23,7 +23,6 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     int selectedBlock = 0; // selected blocks; 0 is no selected
 
     // arraylists
-    ArrayList<Shape> shapes = new ArrayList<Shape>();
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>();
     ArrayList<Block> blocks = new ArrayList<Block>();
 
