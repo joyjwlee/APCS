@@ -2,6 +2,7 @@
 TODO:
 - double precision, do overhaul
 - configuration stage
+- pause/play buttons, then "exit" button
 */
 
 import java.util.*;
@@ -29,7 +30,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // boolean variables
     private boolean configured = false;
     private boolean start = false; // don't start simulation until button is pressed
-    private boolean stop = false;
+    private boolean stop = false; // don't stop simulation until button is pressed
+    private boolean exit = false;
 
     // constructor
     public CollisionsCalculation() {
@@ -240,6 +242,28 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     }
 
     public void simulation() {
+        // stop button
+        JButton setValues = new JButton("STOP");
+        setValues.addActionListener(new ActionListener() {
+            // if clicked
+            public void actionPerformed(ActionEvent ae) {
+                if (!setValues.getText().equals("")) {
+                    setValues.setText(setValues.getText());
+                }
+                setValues.setVisible(false);
+                stop = true;
+            }
+        });
+        setValues.setBounds(1500, 150, 180, 70);
+        setValues.setFont(new Font("Serif", Font.BOLD, 35));
+        setValues.setForeground(BACKGROUNDCOLOR);
+        setValues.setBackground(FOREGROUNDCOLOR);
+        setValues.setOpaque(true);
+        setValues.setBorderPainted(true);
+        setValues.setBorder(
+                BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
+        this.add(setValues);
+
         // sorts by initial position, since blocks will stay in order forever
         Collections.sort(blocks);
 
