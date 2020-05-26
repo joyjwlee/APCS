@@ -28,7 +28,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
 
     // boolean variables
     private boolean configured = false;
-    private boolean start = false;
+    private boolean start = false; // don't start simulation until button is pressed
     private boolean stop = false;
 
     // constructor
