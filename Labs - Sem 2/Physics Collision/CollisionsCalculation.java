@@ -30,7 +30,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // boolean variables
     private boolean configured = false;
     private boolean start = false; // don't start simulation until button is pressed
-    private boolean stop = false; // don't stop simulation until button is pressed
+    private boolean pause = false; // don't stop simulation until button is pressed
     private boolean exit = false;
 
     // constructor
@@ -241,19 +241,36 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
     }
 
-    public void simulation() {
-        // stop button
-        JButton setValues = new JButton("STOP");
-        setValues.addActionListener(new ActionListener() {
-            // if clicked
-            public void actionPerformed(ActionEvent ae) {
-                if (!setValues.getText().equals("")) {
-                    setValues.setText(setValues.getText());
+    public void makeButton(String type) {
+        JButton setValues = new JButton(type);
+        // if pause
+        if (type.equals("Pause")) {
+            setValues.addActionListener(new ActionListener() {
+                // if clicked
+                public void actionPerformed(ActionEvent ae) {
+                    if (!setValues.getText().equals("")) {
+                        setValues.setText(setValues.getText());
+                    }
+                    setValues.setVisible(false);
+                    pause = true;
+                    makeButton("Resume");
                 }
-                setValues.setVisible(false);
-                stop = true;
-            }
-        });
+            });
+        }
+        // if resume
+        else if (type.equals("Resume")) {
+            setValues.addActionListener(new ActionListener() {
+                // if clicked
+                public void actionPerformed(ActionEvent ae) {
+                    if (!setValues.getText().equals("")) {
+                        setValues.setText(setValues.getText());
+                    }
+                    setValues.setVisible(false);
+                    pause = false;
+                    makeButton("Pause");
+                }
+            });
+        }
         setValues.setBounds(1500, 150, 180, 70);
         setValues.setFont(new Font("Serif", Font.BOLD, 35));
         setValues.setForeground(BACKGROUNDCOLOR);
@@ -263,6 +280,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         setValues.setBorder(
                 BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
         this.add(setValues);
+    }
+
+    public void simulation() {
+        // stop button
+        makeButton("Pause");
 
         // sorts by initial position, since blocks will stay in order forever
         Collections.sort(blocks);
@@ -273,7 +295,10 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         } catch (InterruptedException ex) {
         }
 
-        while (!stop) {
+        while (!exit) {
+            while (pause) {
+            }
+
             // Move first then update velocity
             for (Block curr : blocks) {
                 curr.setX(curr.getX() + curr.getV() / 10);
