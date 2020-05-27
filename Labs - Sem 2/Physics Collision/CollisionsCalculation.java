@@ -3,6 +3,7 @@ TODO:
 - double precision, do overhaul
 - configuration stage
 - pause/play buttons, then "exit" button
+- reorganize code into segments that make more sense
 */
 
 import java.util.*;
