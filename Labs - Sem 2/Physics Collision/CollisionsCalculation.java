@@ -24,6 +24,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     int moveX = 0, moveY = 0; // drag
     int numB = 0; // number of blocks
     int selectedBlock = 0; // selected blocks; 0 is no selected
+    JLabel count = new JLabel(""); // label for clacks
+    int clacks = 0; // number of clacks
 
     // arraylists
     ArrayList<Rectangles> boundary = new ArrayList<Rectangles>(); // auto-generated
@@ -231,6 +233,15 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         label.setHorizontalAlignment(SwingConstants.CENTER);
         label.setForeground(FG_COLOR);
 
+        // test text label
+        this.add(count);
+        count.setVisible(true);
+        count.setFont(new Font("Arial", Font.BOLD, 30));
+        count.setBounds(600, 30, 200, 30);
+        count.setHorizontalAlignment(SwingConstants.CENTER);
+        count.setForeground(FG_COLOR);
+        count.setText(Integer.toString(clacks));
+
         // don't move on until start is pressed
         while (!start) {
             this.repaint();
@@ -311,11 +322,13 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 // Bounce off wall
                 if (curr.getX() < 150) {
                     new Sound("Clack");
+                    clacks++;
                     curr.setV(Math.abs(curr.getV()));
                 }
                 // If there is a collision, update velocities
                 if (intersects(curr, right)) {
                     new Sound("Clack");
+                    clacks++;
                     double m1 = curr.getM();
                     double v1 = curr.getV();
                     double m2 = right.getM();
@@ -331,6 +344,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 Thread.sleep(0, 10);
             } catch (InterruptedException ex) {
             }
+
+            // update count label
+            count.setText(Integer.toString(clacks));
 
             // redraw screen
             this.repaint();
