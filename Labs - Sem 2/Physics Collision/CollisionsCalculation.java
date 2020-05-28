@@ -1,11 +1,12 @@
 /*
 TODO:
-- double precision, do overhaul
-- configuration stage
-- pause/play buttons, then "exit" button
-- reorganize code into segments that make more sense
+    - double precision, do overhaul
+    - configuration stage
+    - pause/play buttons, then "exit" button
+    - reorganize code into segments that make more sense
 */
 
+// imports
 import java.util.*;
 import javax.swing.*;
 import java.awt.*;
