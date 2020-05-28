@@ -310,10 +310,12 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
                 Block right = blocks.get(i + 1);
                 // Bounce off wall
                 if (curr.getX() < 150) {
+                    new Sound("Clack");
                     curr.setV(Math.abs(curr.getV()));
                 }
                 // If there is a collision, update velocities
                 if (intersects(curr, right)) {
+                    new Sound("Clack");
                     double m1 = curr.getM();
                     double v1 = curr.getV();
                     double m2 = right.getM();
