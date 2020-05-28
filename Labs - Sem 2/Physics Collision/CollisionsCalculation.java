@@ -16,8 +16,8 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // static final variables
     public static final int WIDTH = 1920;
     public static final int HEIGHT = 1080;
-    public static final Color BACKGROUNDCOLOR = Color.black;
-    public static final Color FOREGROUNDCOLOR = Color.white;
+    public static final Color BG_COLOR = Color.BLACK;
+    public static final Color FG_COLOR = Color.WHITE;
 
     // int variables
     int mouseX = 0, mouseY = 0; // click
@@ -38,7 +38,7 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // constructor
     public CollisionsCalculation() {
         this.setLayout(null);
-        this.setBackground(BACKGROUNDCOLOR);
+        this.setBackground(BG_COLOR);
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
@@ -126,14 +126,14 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
     // Makes boundary
     public void makeBoundary() {
         // Wall
-        Wall wall = new Wall(FOREGROUNDCOLOR);
+        Wall wall = new Wall(FG_COLOR);
         boundary.add(wall);
         // Ground
-        Ground ground = new Ground(FOREGROUNDCOLOR);
+        Ground ground = new Ground(FG_COLOR);
         boundary.add(ground);
         // Tick marks along ground
         for (int i = 0; i <= 200; i++) {
-            Ground tick = new Ground(FOREGROUNDCOLOR);
+            Ground tick = new Ground(FG_COLOR);
             tick.setX(150 + 10 * i);
             tick.setY(ground.getY());
             tick.setW(1);
@@ -191,9 +191,9 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         // end
 
         // test blocks
-        blocks.add(new Block(50, 700, -7, FOREGROUNDCOLOR));
-        blocks.add(new Block(5, 500, -5, FOREGROUNDCOLOR));
-        blocks.add(new Block(3, 100, 4, FOREGROUNDCOLOR));
+        blocks.add(new Block(50, 700, -7, FG_COLOR));
+        blocks.add(new Block(5, 500, -5, FG_COLOR));
+        blocks.add(new Block(3, 100, 4, FG_COLOR));
 
         // while (!configured) {
         // this.repaint();
@@ -215,12 +215,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         });
         setValues.setBounds(1500, 150, 180, 70);
         setValues.setFont(new Font("Serif", Font.BOLD, 35));
-        setValues.setForeground(BACKGROUNDCOLOR);
-        setValues.setBackground(FOREGROUNDCOLOR);
+        setValues.setForeground(BG_COLOR);
+        setValues.setBackground(FG_COLOR);
         setValues.setOpaque(true);
         setValues.setBorderPainted(true);
-        setValues.setBorder(
-                BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
+        setValues.setBorder(BorderFactory.createBevelBorder(0, FG_COLOR, FG_COLOR, FG_COLOR, FG_COLOR));
         this.add(setValues);
 
         // test text label
@@ -230,13 +229,13 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         label.setFont(new Font("Arial", Font.BOLD, 30));
         label.setBounds(400, 30, 200, 30);
         label.setHorizontalAlignment(SwingConstants.CENTER);
-        label.setForeground(FOREGROUNDCOLOR);
+        label.setForeground(FG_COLOR);
 
         // don't move on until start is pressed
         while (!start) {
             this.repaint();
             if (selectedBlock == 0) {
-                label.setText("None selected");
+                label.setText("N/A");
             } else {
                 label.setText("Block: " + selectedBlock);
             }
@@ -275,12 +274,11 @@ public class CollisionsCalculation extends JPanel implements MouseListener, Mous
         }
         setValues.setBounds(1500, 150, 180, 70);
         setValues.setFont(new Font("Serif", Font.BOLD, 35));
-        setValues.setForeground(BACKGROUNDCOLOR);
-        setValues.setBackground(FOREGROUNDCOLOR);
+        setValues.setForeground(BG_COLOR);
+        setValues.setBackground(FG_COLOR);
         setValues.setOpaque(true);
         setValues.setBorderPainted(true);
-        setValues.setBorder(
-                BorderFactory.createBevelBorder(0, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR, FOREGROUNDCOLOR));
+        setValues.setBorder(BorderFactory.createBevelBorder(0, FG_COLOR, FG_COLOR, FG_COLOR, FG_COLOR));
         this.add(setValues);
     }
 
